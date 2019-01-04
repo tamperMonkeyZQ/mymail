@@ -10,8 +10,11 @@ public class Mail {
     String getPriority;
     String isReplySign;
     StringBuffer content;
+    Boolean attachment;
+    String fileName;
 
-    public Mail(int id, String subject, String from, String recieve, String sendTime, String isseen, String getPriority, String isReplySign, StringBuffer content) {
+    public Mail(int id, String subject, String from, String recieve, String sendTime, String isseen, String getPriority, String isReplySign,
+                StringBuffer content,Boolean attachment,String fileName) {
         this.id = id;
         this.subject = subject;
         this.from = from;
@@ -21,6 +24,8 @@ public class Mail {
         this.getPriority = getPriority;
         this.isReplySign = isReplySign;
         this.content = content;
+        this.attachment = attachment;
+        this.fileName = fileName;
     }
 
     public Mail() {
@@ -96,5 +101,21 @@ public class Mail {
 
     public void setContent(StringBuffer content) {
         this.content = content;
+    }
+
+    public Boolean getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Boolean attachment) {
+        this.attachment = attachment;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

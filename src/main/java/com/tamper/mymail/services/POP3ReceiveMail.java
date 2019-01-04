@@ -1,5 +1,6 @@
 package com.tamper.mymail.services;
 
+import com.sun.mail.imap.IMAPFolder;
 import com.tamper.mymail.models.Mail;
 import com.tamper.mymail.models.SimpleMail;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class POP3ReceiveMail {
     /**
      * 接收邮件
      */
+    static String fileName;
     public static void receive(String username,String password) throws Exception {
         // 准备连接服务器的会话信息
         Properties props = new Properties();
@@ -179,13 +181,19 @@ public class POP3ReceiveMail {
         // 解析所有邮件
         Mail mail = new Mail();
         MimeMessage msg = (MimeMessage) messages[id-1];
+        boolean isContainerAttachment = isContainAttachment(msg);
         mail.setId(msg.getMessageNumber());
         mail.setFrom(getFrom(msg));
         mail.setSubject(getSubject(msg));
         mail.setSendTime(getSentDate(msg, null));
+        mail.setAttachment(isContainerAttachment);
         StringBuffer content = new StringBuffer(30);
         getMailTextContent(msg, content);
         mail.setContent(content);
+        if (isContainerAttachment) {
+            saveAttachment(msg, "c:\\mailtmp\\"); //保存附件
+        }
+        mail.setFileName(fileName);
         //释放资源
         folder.close(true);
         store.close();
@@ -199,7 +207,28 @@ public class POP3ReceiveMail {
     public static String getSubject(MimeMessage msg) throws UnsupportedEncodingException, MessagingException {
         return MimeUtility.decodeText(msg.getSubject());
     }
-
+    public void deleteMail(String username, String password,int id) throws MessagingException, IOException {
+        // 准备连接服务器的会话信息
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "pop3");		// 协议
+        props.setProperty("mail.pop3.port", "110");				// 端口
+        props.setProperty("mail.pop3.host", "pop3.healthcarerzq.com");	// pop3服务器
+        // 创建Session实例对象
+        Session session = Session.getInstance(props);
+        Store store = session.getStore("pop3");
+        store.connect(username, password);
+        Folder folder = store.getFolder("INBOX");
+        folder.open(Folder.READ_WRITE);
+        Message[] messages = folder.getMessages();
+        if (messages == null || messages.length < 1)
+            throw new MessagingException("未找到要解析的邮件!");
+        // 解析所有邮件
+        MimeMessage msg = (MimeMessage) messages[id-1];
+        msg.setFlag(Flags.Flag.DELETED, true);
+        //释放资源
+        folder.close(true);
+        store.close();
+    }
     /**
      * 获得邮件发件人
      * @param msg 邮件内容
@@ -402,6 +431,7 @@ public class POP3ReceiveMail {
                 String disp = bodyPart.getDisposition();
                 if (disp != null && (disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE))) {
                     InputStream is = bodyPart.getInputStream();
+                    fileName = decodeText(bodyPart.getFileName());
                     saveFile(is, destDir, decodeText(bodyPart.getFileName()));
                 } else if (bodyPart.isMimeType("multipart/*")) {
                     saveAttachment(bodyPart,destDir);

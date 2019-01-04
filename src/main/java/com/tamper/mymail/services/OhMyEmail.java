@@ -1,7 +1,5 @@
 package com.tamper.mymail.services;
 
-import com.tamper.mymail.services.SendMailException;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.*;

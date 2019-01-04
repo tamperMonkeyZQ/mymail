@@ -9,6 +9,8 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 
@@ -98,86 +100,98 @@
                 </div>
                 <div class="col-lg-9 animated fadeInRight">
                     <div class="mail-box-header">
-
-                        <form method="get" action="index.html" class="pull-right mail-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-sm" name="search" placeholder="Search email">
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-sm btn-primary">
-                                        Search
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <h2>
-                            Inbox (16)
-                        </h2>
-                        <div class="mail-tools tooltip-demo m-t-md">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-
-                            </div>
-                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Refresh</button>
-                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
-                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as important"><i class="fa fa-exclamation"></i> </button>
-                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
+                        <div class="pull-right tooltip-demo">
+                            <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to draft folder"><i class="fa fa-pencil"></i> 存草稿</a>
+                            <a href="mailbox.html" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Discard email"><i class="fa fa-times"></i> 丢弃</a>
                         </div>
+                        <h2>
+                            写邮件
+                        </h2>
                     </div>
                     <div class="mail-box">
 
-                        <table class="table table-hover table-mail">
-                            <tbody>
-                                <tr th:each="mail : ${simpleMailList}" class="read">
-                                    <td class="check-mail">
-                                        <div class="icheckbox_square-green" style="position: relative;"><div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                                    </td>
-                                    <td class="mail-ontact"><a th:text="${mail.from}" th:href="@{'/mail/detail?id='+${mail.id}}"></a></td>
-                                    <td class="mail-subject"><a th:text="${mail.subject}" th:href="@{'/mail/detail?id='+${mail.id}}"></a></td>
-                                    <td class=""></td>
-                                    <td class="text-right mail-date">Mar 22</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                        <div class="mail-body">
+
+                            <form class="form-horizontal" method="get">
+                                <div class="form-group"><label class="col-sm-2 control-label">发送至：</label>
+
+                                    <div class="col-sm-10"><input type="text" id="mailTo" class="form-control" value="@healthcarerzq.com"></div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">主题：</label>
+
+                                    <div class="col-sm-10"><input id="subject" type="text" class="form-control" value=""></div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div class="mail-text h-200">
+
+                            <div class="summernote" style="display: none;">
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="mail-body text-right tooltip-demo">
+                            <a id="send_button" href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send"><i class="fa fa-reply"></i> 发送</a>
+                            <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> 丢弃</a>
+                            <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to draft folder"><i class="fa fa-pencil"></i> 存草稿</a>
+                        </div>
+                        <div class="clearfix"></div>
+
 
 
                     </div>
                 </div>
-            </div>
         </div>
         <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company © 2014-2017
-            </div>
+            <!--<div class="pull-right">-->
+                <!--10GB of <strong>250GB</strong> Free.-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<strong>Copyright</strong> Example Company © 2014-2017-->
+            <!--</div>-->
         </div>
 
     </div>
 </div>
 
-<!-- Mainly scripts -->
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-<!-- Custom and plugin javascript -->
-<script src="/js/inspinia.js"></script>
-<script src="/js/plugins/pace/pace.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
-<!-- iCheck -->
-<script src="/js/plugins/iCheck/icheck.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- SUMMERNOTE -->
+    <script src="/js/plugins/summernote/summernote.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('.summernote').summernote();
+
         });
-    });
-</script>
+        $("#send_button").click(function(){
+            $.ajax({
+                type:"POST",
+                url:"/mail/send/do",
+                data:{
+                    mailTo: $("#mailTo").val(),
+                    subject:$("#subject").val(),
+                    content:$(".note-editable.panel-body").html()
+                },
+                dataType: "json"
+            });
+        });
+    </script>
+
 
 
 
