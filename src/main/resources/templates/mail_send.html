@@ -187,7 +187,10 @@
                     subject:$("#subject").val(),
                     content:$(".note-editable.panel-body").html()
                 },
-                dataType: "json"
+                dataType: "json",
+                success: function() {
+                    window.location.href="/mail/index";
+                }
             });
         });
     </script>
