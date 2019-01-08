@@ -85,7 +85,7 @@ public class MymailApplicationTests {
     @Test
     public void testPebble() throws IOException, PebbleException, SendMailException {
         PebbleEngine engine           = new PebbleEngine.Builder().build();
-        PebbleTemplate compiledTemplate = engine.getTemplate("register.html");
+        PebbleTemplate compiledTemplate = engine.getTemplate("mail_register.html");
 
         Map<String, Object> context = new HashMap<String, Object>();
         context.put("username", "biezhi");

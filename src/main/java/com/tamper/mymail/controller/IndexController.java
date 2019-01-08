@@ -97,4 +97,12 @@ public class IndexController {
         pop3ReceiveMail.deleteMail(hmAccounts.getAccountaddress(), hmAccounts.getAccountpassword(),id);
         return "redirect:/mail/index";
     }
+    @RequestMapping(value = "/mail/mailRegister",method = RequestMethod.GET)
+    public String mailRegister(HttpServletRequest httpServletRequest){
+        return "mail_register";
+    }
+    @RequestMapping(value = "/mail/mailContact",method = RequestMethod.GET)
+    public String mailContact(HttpServletRequest httpServletRequest){
+        return "mail_contact";
+    }
 }
